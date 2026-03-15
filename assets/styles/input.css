@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+/* -- TailwindCSS Theme -- */
+@theme {
+    /* Fonts */
+    --font-inter: "Inter", sans-serif;
+}
+
+/* -- Universal Styles -- */
+.page {
+    @apply min-h-screen
+}
+.page-divider {
+    box-shadow: 0 0 90px 100px rgba(0, 0, 0, 1);
+}
+
+/* -- Header/Landing Page Styles -- */
+.header-button {
+    @apply px-6 py-2 text-white text-lg font-semibold border-3 rounded-xl
+}
+
+
+
+
+/* -- [Marqee!] -- */
+.marqee {
+  --s: 350px; /* size of each item */
+  --g: 50px; /* gap between items */
+
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  touch-action: pan-y;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  cursor: grab;
+}
+.marqee::-webkit-scrollbar {
+  display: none;
+}
+.marqee.is-dragging {
+  cursor: grabbing;
+}
+.marqee-track {
+  display: flex;
+  gap: var(--g);
+  width: max-content;
+}
+.marqee-item {
+  flex: 0 0 var(--s);
+  width: var(--s);
+  user-select: none;
+
+  @apply text-center
+}
+.marqee-item img, .marqee-item a img {
+    -webkit-user-drag: none;
+    user-select: none;
+    pointer-events: none;
+
+    @apply h-[350px] block w-full rounded-xl
+}
+.marqee-item p {
+    @apply px-2 py-4
+}
+.marqee-button {
+    @apply px-6 py-2 text-white text-lg font-semibold border-3 rounded-xl
+}

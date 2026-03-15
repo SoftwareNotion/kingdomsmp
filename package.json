@@ -1,0 +1,22 @@
+{
+  "name": "kingdomsmp",
+  "version": "1.0.0",
+  "description": "Kingdom SMP's Public Website",
+  "main": "index.js",
+  "scripts": {
+    "watch:css": "npx @tailwindcss/cli -i ./assets/styles/input.css -o ./assets/styles/output.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SoftwareNotion/kingdomsmp.git"
+  },
+  "author": "Software Notion",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SoftwareNotion/kingdomsmp/issues"
+  },
+  "homepage": "https://github.com/SoftwareNotion/kingdomsmp#readme",
+  "devDependencies": {
+    "tailwindcss": "^4.2.1"
+  }
+}
