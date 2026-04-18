@@ -198,6 +198,9 @@
   .mb-20 {
     margin-bottom: calc(var(--spacing) * 20);
   }
+  .block {
+    display: block;
+  }
   .flex {
     display: flex;
   }
@@ -408,19 +411,30 @@
       line-height: var(--tw-leading, var(--text-8xl--line-height));
     }
   }
+  .dark\:block {
+    &:where(.dark, .dark *) {
+      display: block;
+    }
+  }
+  .dark\:hidden {
+    &:where(.dark, .dark *) {
+      display: none;
+    }
+  }
+  .dark\:bg-\[\#070200\] {
+    &:where(.dark, .dark *) {
+      background-color: #070200;
+    }
+  }
+  .dark\:text-white {
+    &:where(.dark, .dark *) {
+      color: var(--color-white);
+    }
+  }
 }
 :root {
-  --page-gutter: clamp(1rem, 4vw, 3.75rem);
-  --header-pad-y: clamp(1rem, 2vw, 1.75rem);
-  --section-gap: clamp(3rem, 8vw, 5rem);
-  --section-title: clamp(2.25rem, 5vw, 3.75rem);
-  --hero-stat: clamp(1rem, 2.2vw, 1.5rem);
-  --hero-title: clamp(3rem, 9vw, 6rem);
-  --hero-copy: clamp(1.1rem, 2.8vw, 1.5rem);
-  --button-text: clamp(0.95rem, 1.6vw, 1.125rem);
-  --button-pad-x: clamp(1.25rem, 3vw, 1.75rem);
-  --button-pad-y: clamp(0.7rem, 1.5vw, 0.9rem);
-  --marqee-edge-fade: clamp(2rem, 8vw, 7rem);
+  --page-gutter: clamp(1rem, 4vw, 2rem);
+  --marqee-edge-fade: clamp(3.5rem, 12vw, 10rem);
 }
 body {
   overflow-x: hidden;
@@ -430,47 +444,49 @@ body {
   padding-inline: var(--page-gutter);
 }
 .content-section {
-  min-height: 70vh;
   display: flex;
+  min-height: 70vh;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  text-align: center;
   gap: var(--section-gap);
   padding: clamp(3rem, 8vw, 6rem) 0;
-  text-align: center;
 }
 .section-title {
   margin: 0;
   font-size: var(--section-title);
-  font-weight: 700;
+  --tw-font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-bold);
   line-height: 0.95;
 }
 .divider {
   height: clamp(4rem, 9vw, 6.25rem);
 }
 .divider svg {
+  display: block;
   width: 100%;
   height: clamp(4.5rem, 10vw, 7.5rem);
-  display: block;
 }
 .ksmp-button {
   font-size: var(--button-text);
-  font-weight: 600;
-  line-height: 1;
-  padding: var(--button-pad-y) var(--button-pad-x);
+  font-size: var(--text-lg);
+  line-height: var(--tw-leading, var(--text-lg--line-height));
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-white);
 }
 .hero-panel {
+  display: flex;
   width: 100%;
   flex-grow: 1;
-  display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--color-white);
   gap: clamp(1rem, 2vw, 1.5rem);
   padding: clamp(2rem, 5vw, 3rem) var(--page-gutter);
-  text-align: center;
-  color: white;
 }
 .hero-stat {
   display: flex;
@@ -484,21 +500,23 @@ body {
   margin: 0;
   font-size: var(--hero-title);
   line-height: 0.9;
-  font-weight: 700;
+  --tw-font-weight: var(--font-weight-bold);
+  font-weight: var(--font-weight-bold);
 }
 .hero-copy {
   max-width: min(42rem, 100%);
   margin: 0;
   font-size: var(--hero-copy);
-  font-weight: 600;
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
   line-height: 1.3;
 }
 .hero-actions {
-  width: 100%;
   display: flex;
+  width: 100%;
   flex-wrap: wrap;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   gap: clamp(0.75rem, 2vw, 1.25rem);
 }
 .marqee-shell {
@@ -513,18 +531,23 @@ body {
   inset: 0 var(--page-gutter);
   z-index: 2;
   pointer-events: none;
-  background: linear-gradient( to right, white 0%, transparent var(--marqee-edge-fade), transparent calc(100% - var(--marqee-edge-fade)), white 100% );
+  background: linear-gradient( to right, white 0, rgba(255, 255, 255, 0.96) calc(var(--marqee-edge-fade) * 0.16), rgba(255, 255, 255, 0.82) calc(var(--marqee-edge-fade) * 0.34), rgba(255, 255, 255, 0.56) calc(var(--marqee-edge-fade) * 0.56), rgba(255, 255, 255, 0.24) calc(var(--marqee-edge-fade) * 0.8), transparent var(--marqee-edge-fade), transparent calc(100% - var(--marqee-edge-fade)), rgba(255, 255, 255, 0.24) calc(100% - (var(--marqee-edge-fade) * 0.8)), rgba(255, 255, 255, 0.56) calc(100% - (var(--marqee-edge-fade) * 0.56)), rgba(255, 255, 255, 0.82) calc(100% - (var(--marqee-edge-fade) * 0.34)), rgba(255, 255, 255, 0.96) calc(100% - (var(--marqee-edge-fade) * 0.16)), white 100% );
+}
+.dark .marqee-shell::after {
+  background: linear-gradient( to right, #070200 0, rgba(7, 2, 0, 0.96) calc(var(--marqee-edge-fade) * 0.16), rgba(7, 2, 0, 0.82) calc(var(--marqee-edge-fade) * 0.34), rgba(7, 2, 0, 0.56) calc(var(--marqee-edge-fade) * 0.56), rgba(7, 2, 0, 0.24) calc(var(--marqee-edge-fade) * 0.8), transparent var(--marqee-edge-fade), transparent calc(100% - var(--marqee-edge-fade)), rgba(7, 2, 0, 0.24) calc(100% - (var(--marqee-edge-fade) * 0.8)), rgba(7, 2, 0, 0.56) calc(100% - (var(--marqee-edge-fade) * 0.56)), rgba(7, 2, 0, 0.82) calc(100% - (var(--marqee-edge-fade) * 0.34)), rgba(7, 2, 0, 0.96) calc(100% - (var(--marqee-edge-fade) * 0.16)), #070200 100% );
 }
 .marqee {
   --s: 350px;
   --g: 50px;
   width: 100%;
+  cursor: grab;
+  --tw-pan-y: pan-y;
+  touch-action: var(--tw-pan-x,) var(--tw-pan-y,) var(--tw-pinch-zoom,);
   overflow-x: auto;
   overflow-y: hidden;
   touch-action: pan-y;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  cursor: grab;
 }
 .marqee::-webkit-scrollbar {
   display: none;
@@ -534,24 +557,26 @@ body {
 }
 .marqee-track {
   display: flex;
-  gap: clamp(1rem, 3vw, var(--g));
   width: max-content;
+  gap: clamp(1rem, 3vw, var(--g));
 }
 .marqee-item {
+  text-align: center;
+  -webkit-user-select: none;
+  user-select: none;
   flex: 0 0 min(var(--s), 82vw);
   width: min(var(--s), 82vw);
-  user-select: none;
-  text-align: center;
 }
 .marqee-item img, .marqee-item a img {
-  -webkit-user-drag: none;
-  user-select: none;
   pointer-events: none;
+  -webkit-user-drag: none;
   aspect-ratio: 1 / 1;
   height: auto;
   object-fit: cover;
   display: block;
   width: 100%;
+  -webkit-user-select: none;
+  user-select: none;
 }
 .marqee-item p {
   padding-block: clamp(0.5rem, 1.5vw, 0.75rem);
@@ -561,22 +586,23 @@ body {
 }
 .marqee-button {
   font-size: clamp(0.95rem, 1.6vw, 1.125rem);
-  font-weight: 600;
+  --tw-font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-white);
 }
 .marqee-meta {
-  margin-top: clamp(0.75rem, 2vw, 1.25rem);
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
   align-items: center;
-  gap: 0.75rem;
+  justify-content: space-between;
   text-align: left;
+  margin-top: clamp(0.75rem, 2vw, 1.25rem);
+  gap: 0.75rem;
 }
 .marqee-icon-group {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: calc(var(--spacing) * 2);
 }
 @media (max-width: 640px) {
   .marqee-meta {
@@ -622,6 +648,18 @@ body {
   inherits: false;
   initial-value: 100%;
 }
+@property --tw-pan-x {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-pan-y {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-pinch-zoom {
+  syntax: "*";
+  inherits: false;
+}
 @keyframes bounce {
   0%, 100% {
     transform: translateY(-25%);
@@ -643,6 +681,9 @@ body {
       --tw-font-weight: initial;
       --tw-text-shadow-color: initial;
       --tw-text-shadow-alpha: 100%;
+      --tw-pan-x: initial;
+      --tw-pan-y: initial;
+      --tw-pinch-zoom: initial;
     }
   }
 }

@@ -4,18 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kingdom SMP</title>
+    <script>
+        (() => {
+            const savedTheme = localStorage.getItem("theme");
+            const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+            if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
+                document.documentElement.classList.add("dark");
+            }
+        })();
+    </script>
     <link rel="stylesheet" href="./assets/styles/output.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Stack+Sans+Headline:wght@200..700&family=Stack+Sans+Notch:wght@200..700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/94c9f77b8c.js" crossorigin="anonymous"></script>
 </head>
-<body class="m-0 font-inter">
+<body class="m-0 font-inter dark:bg-[#070200] dark:text-white">
     <!-- ----- [Header / Landing Page] ----- -->
     <header class="xl:min-h-screen min-h-[700px] flex flex-col items-center">
         <div class="w-full flex flex-row justify-between px-5 md:px-15 py-3 md:py-7">
             <a href="./index.html"><img src="./assets/imgs/logo.svg" alt="KSMP Logo" class="min-w-4 md:min-w-12"></a>
-            <button><img src="./assets/imgs/nightswitch.svg" alt="KSMP Logo" class="min-w-4 md:min-w-12"></button>
+            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle dark mode" aria-pressed="false">
+                <img src="./assets/imgs/nightswitch.svg" alt="" class="min-w-4 md:min-w-12 block dark:hidden">
+                <img src="./assets/imgs/lightswitch.svg" alt="" class="min-w-4 md:min-w-12 dark:block hidden">
+            </button>
         </div>
         <div class="w-full flex flex-col justify-center items-center text-center grow space-y-6 bg-[url(/assets/imgs/header.png)] bg-cover bg-center text-white">
             <span class="space-x-1 flex flex-row items-center">

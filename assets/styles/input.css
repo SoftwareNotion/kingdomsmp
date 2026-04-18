@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 
 /* -- TailwindCSS Theme -- */
 @theme {
@@ -7,41 +8,27 @@
 }
 
 :root {
-  --page-gutter: clamp(1rem, 4vw, 3.75rem);
-  --header-pad-y: clamp(1rem, 2vw, 1.75rem);
-  --section-gap: clamp(3rem, 8vw, 5rem);
-  --section-title: clamp(2.25rem, 5vw, 3.75rem);
-  --hero-stat: clamp(1rem, 2.2vw, 1.5rem);
-  --hero-title: clamp(3rem, 9vw, 6rem);
-  --hero-copy: clamp(1.1rem, 2.8vw, 1.5rem);
-  --button-text: clamp(0.95rem, 1.6vw, 1.125rem);
-  --button-pad-x: clamp(1.25rem, 3vw, 1.75rem);
-  --button-pad-y: clamp(0.7rem, 1.5vw, 0.9rem);
-  --marqee-edge-fade: clamp(2rem, 8vw, 7rem);
+  --page-gutter: clamp(1rem, 4vw, 2rem);
+  --marqee-edge-fade: clamp(3.5rem, 12vw, 10rem);
 }
 
 /* -- Universal Styles -- */
 body {
-  overflow-x: hidden;
+  @apply overflow-x-hidden;
 }
 .site-shell {
-  width: 100%;
+  @apply w-full;
   padding-inline: var(--page-gutter);
 }
 .content-section {
-  min-height: 70vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  @apply min-h-[70vh] flex flex-col justify-center items-center text-center;
   gap: var(--section-gap);
   padding: clamp(3rem, 8vw, 6rem) 0;
-  text-align: center;
 }
 .section-title {
   margin: 0;
   font-size: var(--section-title);
-  font-weight: 700;
+  @apply font-bold;
   line-height: 0.95;
 }
 .divider {
@@ -49,35 +36,22 @@ body {
 }
 
 .divider svg {
-  width: 100%;
+  @apply block w-full;
   height: clamp(4.5rem, 10vw, 7.5rem);
-  display: block;
 }
 
 /* -- Header/Landing Page Styles -- */
 .ksmp-button {
     font-size: var(--button-text);
-    font-weight: 600;
-    line-height: 1;
-    padding: var(--button-pad-y) var(--button-pad-x);
-    @apply text-white
+    @apply text-white text-lg font-semibold;
 }
 .hero-panel {
-  width: 100%;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  @apply w-full grow flex flex-col justify-center items-center text-center text-white;
   gap: clamp(1rem, 2vw, 1.5rem);
   padding: clamp(2rem, 5vw, 3rem) var(--page-gutter);
-  text-align: center;
-  color: white;
 }
 .hero-stat {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  @apply flex flex-row items-center;
   gap: 0.35rem;
   font-size: var(--hero-stat);
 }
@@ -86,21 +60,17 @@ body {
   margin: 0;
   font-size: var(--hero-title);
   line-height: 0.9;
-  font-weight: 700;
+  @apply font-bold;
 }
 .hero-copy {
   max-width: min(42rem, 100%);
   margin: 0;
   font-size: var(--hero-copy);
-  font-weight: 600;
+  @apply font-semibold;
   line-height: 1.3;
 }
 .hero-actions {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+  @apply w-full flex flex-wrap justify-center items-center;
   gap: clamp(0.75rem, 2vw, 1.25rem);
 }
 
@@ -109,9 +79,7 @@ body {
 
 /* -- [Marqee!] -- */
 .marqee-shell {
-  position: relative;
-  width: 100%;
-  max-width: 100vw;
+  @apply relative w-full max-w-[100vw];
   padding-inline: var(--page-gutter);
 }
 .marqee-shell::after {
@@ -122,10 +90,35 @@ body {
   pointer-events: none;
   background: linear-gradient(
     to right,
-    white 0%,
+    white 0,
+    rgba(255, 255, 255, 0.96) calc(var(--marqee-edge-fade) * 0.16),
+    rgba(255, 255, 255, 0.82) calc(var(--marqee-edge-fade) * 0.34),
+    rgba(255, 255, 255, 0.56) calc(var(--marqee-edge-fade) * 0.56),
+    rgba(255, 255, 255, 0.24) calc(var(--marqee-edge-fade) * 0.8),
     transparent var(--marqee-edge-fade),
     transparent calc(100% - var(--marqee-edge-fade)),
+    rgba(255, 255, 255, 0.24) calc(100% - (var(--marqee-edge-fade) * 0.8)),
+    rgba(255, 255, 255, 0.56) calc(100% - (var(--marqee-edge-fade) * 0.56)),
+    rgba(255, 255, 255, 0.82) calc(100% - (var(--marqee-edge-fade) * 0.34)),
+    rgba(255, 255, 255, 0.96) calc(100% - (var(--marqee-edge-fade) * 0.16)),
     white 100%
+  );
+}
+.dark .marqee-shell::after {
+  background: linear-gradient(
+    to right,
+    #070200 0,
+    rgba(7, 2, 0, 0.96) calc(var(--marqee-edge-fade) * 0.16),
+    rgba(7, 2, 0, 0.82) calc(var(--marqee-edge-fade) * 0.34),
+    rgba(7, 2, 0, 0.56) calc(var(--marqee-edge-fade) * 0.56),
+    rgba(7, 2, 0, 0.24) calc(var(--marqee-edge-fade) * 0.8),
+    transparent var(--marqee-edge-fade),
+    transparent calc(100% - var(--marqee-edge-fade)),
+    rgba(7, 2, 0, 0.24) calc(100% - (var(--marqee-edge-fade) * 0.8)),
+    rgba(7, 2, 0, 0.56) calc(100% - (var(--marqee-edge-fade) * 0.56)),
+    rgba(7, 2, 0, 0.82) calc(100% - (var(--marqee-edge-fade) * 0.34)),
+    rgba(7, 2, 0, 0.96) calc(100% - (var(--marqee-edge-fade) * 0.16)),
+    #070200 100%
   );
 }
 
@@ -133,70 +126,54 @@ body {
   --s: 350px; /* size of each item */
   --g: 50px; /* gap between items */
 
-  width: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
+  @apply w-full overflow-x-auto overflow-y-hidden touch-pan-y cursor-grab;
   touch-action: pan-y;
   scrollbar-width: none;
   -ms-overflow-style: none;
-  cursor: grab;
 }
 .marqee::-webkit-scrollbar {
   display: none;
 }
 .marqee.is-dragging {
-  cursor: grabbing;
+  @apply cursor-grabbing;
 }
 .marqee-track {
-  display: flex;
+  @apply flex w-max;
   gap: clamp(1rem, 3vw, var(--g));
-  width: max-content;
 }
 .marqee-item {
+  @apply select-none text-center;
   flex: 0 0 min(var(--s), 82vw);
   width: min(var(--s), 82vw);
-  user-select: none;
-
-  @apply text-center
 }
 .marqee-item img, .marqee-item a img {
-    -webkit-user-drag: none;
-    user-select: none;
     pointer-events: none;
+    -webkit-user-drag: none;
     aspect-ratio: 1 / 1;
     height: auto;
     object-fit: cover;
 
-    @apply block w-full
+    @apply block w-full select-none
 }
 .marqee-item p {
     padding-block: clamp(0.5rem, 1.5vw, 0.75rem);
     font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-    @apply font-semibold
+    @apply font-semibold;
 }
 .marqee-button {
     font-size: clamp(0.95rem, 1.6vw, 1.125rem);
-    font-weight: 600;
-    @apply text-white
+    @apply text-white font-semibold;
 }
 .marqee-meta {
+  @apply flex flex-wrap justify-between items-center text-left;
   margin-top: clamp(0.75rem, 2vw, 1.25rem);
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
   gap: 0.75rem;
-  text-align: left;
 }
 .marqee-icon-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  @apply flex flex-wrap gap-2;
 }
-
 @media (max-width: 640px) {
   .marqee-meta {
-    justify-content: center;
-    text-align: center;
+    @apply justify-center text-center;
   }
 }

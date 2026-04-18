@@ -1,3 +1,22 @@
+const root = document.documentElement;
+const themeToggle = document.getElementById("theme-toggle");
+
+const syncThemeToggle = () => {
+    if (!themeToggle) {
+        return;
+    }
+
+    themeToggle.setAttribute("aria-pressed", String(root.classList.contains("dark")));
+};
+
+syncThemeToggle();
+
+themeToggle?.addEventListener("click", () => {
+    const isDark = root.classList.toggle("dark");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+    syncThemeToggle();
+});
+
 document.querySelectorAll(".marqee").forEach((marqee) => {
     const track = marqee.querySelector(".marqee-track");
     const originalItems = Array.from(track.children);
