@@ -17,35 +17,110 @@ themeToggle?.addEventListener("click", () => {
     syncThemeToggle();
 });
 
+const desktopLoopQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
+
 document.querySelectorAll(".marqee").forEach((marqee) => {
     const track = marqee.querySelector(".marqee-track");
+
+    if (!track) {
+        return;
+    }
+
     const originalItems = Array.from(track.children);
-    const singleSetWidth = track.scrollWidth;
-
-    const createCloneSet = () => originalItems.map((item) => {
-        const clone = item.cloneNode(true);
-        clone.setAttribute("aria-hidden", "true");
-        return clone;
-    });
-
-    track.prepend(...createCloneSet());
-    track.append(...createCloneSet());
-    marqee.scrollLeft = singleSetWidth;
-
+    let leadingClones = [];
+    let trailingClones = [];
+    let isLooping = false;
     let isDragging = false;
     let pointerId = null;
     let dragStartX = 0;
     let dragStartScrollLeft = 0;
 
+    const createCloneSet = () => originalItems.map((item) => {
+        const clone = item.cloneNode(true);
+        clone.setAttribute("aria-hidden", "true");
+        clone.dataset.clone = "true";
+        return clone;
+    });
+
+    const getSingleSetWidth = () => {
+        const firstItem = originalItems[0];
+        const lastItem = originalItems.at(-1);
+
+        if (!firstItem || !lastItem) {
+            return 0;
+        }
+
+        return (lastItem.offsetLeft + lastItem.offsetWidth) - firstItem.offsetLeft;
+    };
+
     const normalizeScroll = () => {
-        if (marqee.scrollLeft <= 0) {
+        if (!isLooping) {
+            return;
+        }
+
+        const singleSetWidth = getSingleSetWidth();
+
+        if (!singleSetWidth) {
+            return;
+        }
+
+        if (marqee.scrollLeft <= 1) {
             marqee.scrollLeft += singleSetWidth;
-        } else if (marqee.scrollLeft >= singleSetWidth * 2) {
+        } else if (marqee.scrollLeft >= (singleSetWidth * 2) - 1) {
             marqee.scrollLeft -= singleSetWidth;
         }
     };
 
+    const enableLooping = () => {
+        if (isLooping || !originalItems.length) {
+            return;
+        }
+
+        leadingClones = createCloneSet();
+        trailingClones = createCloneSet();
+
+        track.prepend(...leadingClones);
+        track.append(...trailingClones);
+
+        isLooping = true;
+        marqee.classList.add("is-looping");
+
+        requestAnimationFrame(() => {
+            marqee.scrollLeft = getSingleSetWidth();
+        });
+    };
+
+    const disableLooping = () => {
+        if (!isLooping) {
+            return;
+        }
+
+        leadingClones.forEach((clone) => clone.remove());
+        trailingClones.forEach((clone) => clone.remove());
+
+        leadingClones = [];
+        trailingClones = [];
+        isLooping = false;
+
+        marqee.classList.remove("is-looping");
+        marqee.scrollLeft = 0;
+    };
+
+    const syncLoopMode = () => {
+        if (desktopLoopQuery.matches) {
+            enableLooping();
+        } else {
+            disableLooping();
+        }
+    };
+
+    syncLoopMode();
+
     marqee.addEventListener("pointerdown", (event) => {
+        if (event.pointerType === "touch") {
+            return;
+        }
+
         isDragging = true;
         pointerId = event.pointerId;
         dragStartX = event.clientX;
@@ -81,4 +156,15 @@ document.querySelectorAll(".marqee").forEach((marqee) => {
     marqee.addEventListener("scroll", normalizeScroll);
     marqee.addEventListener("pointerup", stopDragging);
     marqee.addEventListener("pointercancel", stopDragging);
+    marqee.addEventListener("pointerleave", stopDragging);
+    desktopLoopQuery.addEventListener("change", syncLoopMode);
+    window.addEventListener("resize", () => {
+        if (!isLooping) {
+            return;
+        }
+
+        requestAnimationFrame(() => {
+            marqee.scrollLeft = getSingleSetWidth();
+        });
+    });
 });

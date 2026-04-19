@@ -1,10 +1,20 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
+@font-face {
+    font-family: "Clash Grotesk";
+    src: url("../fonts/clash-grotesk/ClashGrotesk-Variable.woff2") format("woff2"),
+         url("../fonts/clash-grotesk/ClashGrotesk-Variable.woff") format("woff");
+    font-weight: 200 700;
+    font-style: normal;
+    font-display: swap;
+}
+
 /* -- TailwindCSS Theme -- */
 @theme {
     /* Fonts */
     --font-inter: "Inter", sans-serif;
+    --font-clash: "Clash Grotesk", sans-serif;
 }
 
 :root {
@@ -43,7 +53,10 @@ body {
 /* -- Header/Landing Page Styles -- */
 .ksmp-button {
     font-size: var(--button-text);
-    @apply text-white text-lg font-semibold;
+    height: 3rem;
+    line-height: 1;
+    padding-block: 0;
+    @apply inline-flex items-center justify-center text-white text-lg font-semibold;
 }
 .hero-panel {
   @apply w-full grow flex flex-col justify-center items-center text-center text-white;
@@ -126,8 +139,11 @@ body {
   --s: 350px; /* size of each item */
   --g: 50px; /* gap between items */
 
-  @apply w-full overflow-x-auto overflow-y-hidden touch-pan-y cursor-grab;
-  touch-action: pan-y;
+  @apply w-full overflow-x-auto overflow-y-hidden;
+  touch-action: pan-x pinch-zoom;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scroll-padding-inline: var(--page-gutter);
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -135,7 +151,8 @@ body {
   display: none;
 }
 .marqee.is-dragging {
-  @apply cursor-grabbing;
+  cursor: grabbing;
+  scroll-snap-type: none;
 }
 .marqee-track {
   @apply flex w-max;
@@ -155,14 +172,19 @@ body {
 
     @apply block w-full select-none
 }
+.kingdom-card img, .kingdom-card a img {
+    aspect-ratio: 1.47 / 1;
+}
 .marqee-item p {
-    padding-block: clamp(0.5rem, 1.5vw, 0.75rem);
     font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-    @apply font-semibold;
+    @apply font-semibold pt-2;
 }
 .marqee-button {
     font-size: clamp(0.95rem, 1.6vw, 1.125rem);
-    @apply text-white font-semibold;
+    height: 3rem;
+    line-height: 1;
+    padding-block: 0;
+    @apply inline-flex items-center justify-center text-white font-semibold;
 }
 .marqee-meta {
   @apply flex flex-wrap justify-between items-center text-left;
@@ -172,8 +194,27 @@ body {
 .marqee-icon-group {
   @apply flex flex-wrap gap-2;
 }
+@media (hover: hover) and (pointer: fine) {
+  .marqee {
+    cursor: grab;
+    scroll-snap-type: none;
+  }
+}
 @media (max-width: 640px) {
+  .marqee {
+    --g: 0.875rem;
+    scroll-snap-type: x proximity;
+  }
+  .marqee[style*="--s: 500px"] {
+    --s: 82vw;
+  }
+  .marqee[style*="--s: 350px"] {
+    --s: 72vw;
+  }
   .marqee-meta {
     @apply justify-center text-center;
+  }
+  .marqee-item {
+    scroll-snap-align: start;
   }
 }
