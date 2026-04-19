@@ -200,7 +200,12 @@ body {
     scroll-snap-type: none;
   }
 }
-@media (max-width: 640px) {
+@media (hover: none), (pointer: coarse), (max-width: 640px) {
+  .marqee-shell::after {
+    content: none;
+    display: none;
+    background: none;
+  }
   .marqee {
     --g: 0.875rem;
     scroll-snap-type: x proximity;
