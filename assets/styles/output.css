@@ -561,7 +561,6 @@ body {
   width: 100%;
   overflow-x: auto;
   overflow-y: hidden;
-  touch-action: pan-x pinch-zoom;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
   scroll-padding-inline: var(--page-gutter);
@@ -645,8 +644,13 @@ body {
     display: none;
     background: none;
   }
+  .marqee-shell {
+    padding-inline: 0;
+  }
   .marqee {
     --g: 0.875rem;
+    touch-action: auto;
+    scroll-padding-inline: 0;
     scroll-snap-type: x proximity;
   }
   .marqee[style*="--s: 500px"] {
