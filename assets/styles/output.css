@@ -645,12 +645,12 @@ body {
     background: none;
   }
   .marqee-shell {
-    padding-inline: 0;
+    padding-inline: 0.75rem;
   }
   .marqee {
     --g: 0.875rem;
     touch-action: auto;
-    scroll-padding-inline: 0;
+    scroll-padding-inline: 0.75rem;
     scroll-snap-type: x proximity;
   }
   .marqee[style*="--s: 500px"] {
