@@ -175,14 +175,13 @@ body {
     aspect-ratio: 1.47 / 1;
 }
 .marqee-item p {
-    font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-    @apply font-semibold pt-2;
+    font-size: clamp(1.1rem, 2.5vw, 2rem);
+    @apply font-clash font-semibold pt-2;
 }
 .marqee-button {
     font-size: clamp(0.95rem, 1.6vw, 1.125rem);
     height: 3rem;
     line-height: 1;
-    padding-block: 0;
     @apply inline-flex items-center justify-center text-white font-semibold;
 }
 .marqee-meta {
